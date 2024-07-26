@@ -1,0 +1,69 @@
+package views
+
+import (
+	"bytes"
+	"github.com/believer/recipes/model"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/renderer/html"
+)
+
+func MarkdownToHTML(input []byte) string {
+	var buf bytes.Buffer
+
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.Strikethrough,
+			extension.Typographer,
+			extension.NewFootnote(
+				extension.WithFootnoteBacklinkClass([]byte("font-mono no-underline")),
+			),
+			extension.Table,
+		),
+		goldmark.WithRendererOptions(
+			html.WithXHTML(),
+			html.WithUnsafe(),
+		),
+	)
+
+	if err := md.Convert(input, &buf); err != nil {
+		panic(err)
+	}
+
+	return buf.String()
+}
+
+templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
+	@Layout() {
+		<article class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0 space-y-8">
+			<h1 class="text-3xl font-semibold">
+				{ recipe.Name }
+			</h1>
+			if recipe.Description.Valid {
+				<section class="space-y-4">
+					<h2 class="text-lg font-semibold">Instruktioner</h2>
+					<div class="markdown">
+						@templ.Raw(MarkdownToHTML([]byte(recipe.Description.String)))
+					</div>
+				</section>
+			}
+			if len(ingredients) > 0 {
+				<section class="space-y-4">
+					<h2 class="text-lg font-semibold">Ingredienser</h2>
+					<ul class="rounded-lg border border-slate-200 divide-y divide-slate-200">
+						for _, ingredient := range ingredients {
+							<li class="p-4 text-sm flex justify-between">
+								<div class="font-medium">
+									{ ingredient.Name }
+								</div>
+								<div>
+									{ ingredient.Amount }
+								</div>
+							</li>
+						}
+					</ul>
+				</section>
+			}
+		</article>
+	}
+}

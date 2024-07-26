@@ -1,0 +1,25 @@
+package views
+
+import (
+	"fmt"
+	"github.com/believer/recipes/model"
+)
+
+templ Index(recipes []model.Recipe) {
+	@Layout() {
+		<div class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0">
+			<ul>
+				for _, recipe := range recipes {
+					<li>
+						<a
+							class="text-sky-800"
+							href={ templ.URL(fmt.Sprintf("/%d", recipe.ID)) }
+						>
+							{ recipe.Name }
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	}
+}

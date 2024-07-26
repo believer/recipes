@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.markdown ul {
+  @apply space-y-2 pl-5;
+}
+
+.markdown li {
+  @apply list-decimal;
+}

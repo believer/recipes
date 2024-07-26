@@ -41,7 +41,7 @@ func main() {
 
 		id := r.PathValue("id")
 
-		err := data.DB.Select(&ingredients, "SELECT i.name, ri.amount FROM recipe as r INNER JOIN recipe_ingredient AS ri ON ri.recipe_id = r.id INNER JOIN ingredient as i ON ri.ingredient_id = i.id WHERE r.id = $1;", id)
+		err := data.DB.Select(&ingredients, "SELECT i.name, ri.amount FROM recipe as r INNER JOIN recipe_ingredient AS ri ON ri.recipe_id = r.id INNER JOIN ingredient as i ON ri.ingredient_id = i.id WHERE r.id = $1 ORDER BY amount IS NULL;", id)
 
 		if err != nil {
 			log.Println(err)

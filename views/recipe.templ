@@ -36,9 +36,16 @@ func MarkdownToHTML(input []byte) string {
 templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 	@Layout() {
 		<article class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0 space-y-8">
-			<h1 class="text-3xl font-semibold">
-				{ recipe.Name }
-			</h1>
+			<header class="flex flex-col gap-y-4">
+				<h1 class="text-3xl font-semibold">
+					{ recipe.Name }
+				</h1>
+				if recipe.Url.Valid {
+					<a class="text-sky-700" href={ templ.URL(recipe.Url.String) } target="_blank" rel="noopener noreferrer">
+						Länk
+					</a>
+				}
+			</header>
 			if recipe.Description.Valid {
 				<section class="space-y-4">
 					<h2 class="text-lg font-semibold">Instruktioner</h2>
@@ -56,9 +63,11 @@ templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 								<div class="font-medium">
 									{ ingredient.Name }
 								</div>
-								<div>
-									{ ingredient.Amount }
-								</div>
+								if ingredient.Amount.Valid {
+									<div>
+										{ ingredient.Amount.String }
+									</div>
+								}
 							</li>
 						}
 					</ul>

@@ -11,6 +11,6 @@ type Recipe struct {
 }
 
 type Ingredient struct {
-	Name   string `db:"name"`
-	Amount string `db:"amount"`
+	Name   string         `db:"name"`
+	Amount sql.NullString `db:"amount"`
 }

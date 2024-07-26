@@ -5,3 +5,4 @@ tmp
 *.gz
 main
 public/output.css
+views/*_templ.go

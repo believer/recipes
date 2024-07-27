@@ -40,12 +40,12 @@ templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 				<h1 class="text-3xl font-semibold">
 					{ recipe.Name }
 				</h1>
-				<div class="flex gap-x-4 items-center border-t border-b border-slate-200 py-4">
-					<div class="rounded-full px-3 py-0.5 text-xs uppercase font-medium border-slate-700 border">
+				<div class="flex gap-x-4 items-center border-t border-b border-neutral-200 dark:border-neutral-700 py-4">
+					<div class="rounded-full px-3 py-0.5 text-xs uppercase font-medium border-neutral-700 border">
 						{ recipe.CourseType() }
 					</div>
 					if recipe.Url.Valid {
-						<a class="text-sky-700" href={ templ.URL(recipe.Url.String) } target="_blank" rel="noopener noreferrer">
+						<a class="text-sky-700 dark:text-sky-500" href={ templ.URL(recipe.Url.String) } target="_blank" rel="noopener noreferrer">
 							Länk
 						</a>
 					}
@@ -62,7 +62,7 @@ templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 			if len(ingredients) > 0 {
 				<section class="space-y-4">
 					<h2 class="text-lg font-semibold">Ingredienser</h2>
-					<ul class="rounded-lg border border-slate-200 divide-y divide-slate-200 bg-slate-50">
+					<ul class="rounded-lg border border-neutral-200 divide-y divide-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:divide-neutral-700 dark:bg-neutral-900">
 						for _, ingredient := range ingredients {
 							<li class="p-4 text-sm flex justify-between">
 								<div class="font-medium">

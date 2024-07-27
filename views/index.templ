@@ -12,7 +12,7 @@ templ Index(recipes []model.Recipe) {
 				for _, recipe := range recipes {
 					<li>
 						<a
-							class="text-sky-800"
+							class="text-sky-700 dark:text-sky-500"
 							href={ templ.URL(fmt.Sprintf("/recipe/%d", recipe.ID)) }
 						>
 							{ recipe.Name }

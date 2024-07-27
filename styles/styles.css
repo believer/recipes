@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply text-neutral-800 dark:text-neutral-300;
+}
+
 .markdown {
   @apply space-y-4;
 }

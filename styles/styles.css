@@ -14,9 +14,12 @@ body {
   @apply font-semibold;
 }
 
-.markdown ul,
-ol {
+.markdown ul {
   @apply space-y-2 pl-5;
+}
+
+.markdown ol {
+  @apply space-y-3;
 }
 
 .markdown ul li {
@@ -24,5 +27,13 @@ ol {
 }
 
 .markdown ol li {
-  @apply list-decimal;
+  @apply text-sm flex items-center;
+
+  counter-increment: section;
+}
+
+.markdown ol li:before {
+  @apply text-lg font-bold border-r-2 border-green-400 pr-3 mr-3;
+
+  content: counter(section);
 }

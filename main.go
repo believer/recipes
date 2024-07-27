@@ -26,7 +26,7 @@ func main() {
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		var recipes []model.Recipe
 
-		err := data.DB.Select(&recipes, "SELECT id, url, name, type FROM recipe ORDER BY name")
+		err := data.DB.Select(&recipes, "SELECT id, url, name, course FROM recipe ORDER BY name")
 
 		if err != nil {
 			log.Println(err)
@@ -41,13 +41,13 @@ func main() {
 
 		id := r.PathValue("id")
 
-		err := data.DB.Select(&ingredients, "SELECT i.name, ri.amount FROM recipe as r INNER JOIN recipe_ingredient AS ri ON ri.recipe_id = r.id INNER JOIN ingredient as i ON ri.ingredient_id = i.id WHERE r.id = $1 ORDER BY amount IS NULL;", id)
+		err := data.DB.Select(&ingredients, "SELECT ingredient, amount, serving_size FROM recipe_ingredient WHERE recipe_id = $1 ORDER BY amount IS NULL;", id)
 
 		if err != nil {
 			log.Println(err)
 		}
 
-		err = data.DB.Get(&recipe, "SELECT id, url, name, type, description FROM recipe WHERE id = $1;", id)
+		err = data.DB.Get(&recipe, "SELECT id, url, name, course, description FROM recipe WHERE id = $1;", id)
 
 		if err != nil {
 			log.Println(err)

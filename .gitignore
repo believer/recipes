@@ -6,3 +6,4 @@ tmp
 main
 public/output.css
 views/*_templ.go
+data/seed.sql

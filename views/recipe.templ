@@ -40,11 +40,16 @@ templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 				<h1 class="text-3xl font-semibold">
 					{ recipe.Name }
 				</h1>
-				if recipe.Url.Valid {
-					<a class="text-sky-700" href={ templ.URL(recipe.Url.String) } target="_blank" rel="noopener noreferrer">
-						Länk
-					</a>
-				}
+				<div class="flex gap-x-4 items-center border-t border-b border-slate-200 py-4">
+					<div class="rounded-full px-3 py-0.5 text-xs uppercase font-medium border-slate-700 border">
+						{ recipe.CourseType() }
+					</div>
+					if recipe.Url.Valid {
+						<a class="text-sky-700" href={ templ.URL(recipe.Url.String) } target="_blank" rel="noopener noreferrer">
+							Länk
+						</a>
+					}
+				</div>
 			</header>
 			if recipe.Description.Valid {
 				<section class="space-y-4">
@@ -57,15 +62,16 @@ templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 			if len(ingredients) > 0 {
 				<section class="space-y-4">
 					<h2 class="text-lg font-semibold">Ingredienser</h2>
-					<ul class="rounded-lg border border-slate-200 divide-y divide-slate-200">
+					<ul class="rounded-lg border border-slate-200 divide-y divide-slate-200 bg-slate-50">
 						for _, ingredient := range ingredients {
 							<li class="p-4 text-sm flex justify-between">
 								<div class="font-medium">
 									{ ingredient.Name }
 								</div>
-								if ingredient.Amount.Valid {
+								if ingredient.Amount.Valid && ingredient.ServingSize.Valid {
 									<div>
 										{ ingredient.Amount.String }
+										{ ingredient.ServingSize.String }
 									</div>
 								}
 							</li>

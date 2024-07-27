@@ -7,10 +7,20 @@ type Recipe struct {
 	Description sql.NullString `db:"description"`
 	Url         sql.NullString `db:"url"`
 	Name        string         `db:"name"`
-	Type        string         `db:"type"`
+	Course      string         `db:"course"`
+}
+
+func (r Recipe) CourseType() string {
+	switch r.Course {
+	case "main":
+		return "Huvudrätt"
+	default:
+		return ""
+	}
 }
 
 type Ingredient struct {
-	Name   string         `db:"name"`
-	Amount sql.NullString `db:"amount"`
+	Name        string         `db:"ingredient"`
+	Amount      sql.NullString `db:"amount"`
+	ServingSize sql.NullString `db:"serving_size"`
 }

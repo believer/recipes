@@ -2,10 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-.markdown ul {
+.markdown {
+  @apply space-y-4;
+}
+
+.markdown h3 {
+  @apply font-semibold;
+}
+
+.markdown ul,
+ol {
   @apply space-y-2 pl-5;
 }
 
-.markdown li {
+.markdown ul li {
+  @apply list-disc;
+}
+
+.markdown ol li {
   @apply list-decimal;
 }

@@ -13,7 +13,7 @@ templ Index(recipes []model.Recipe) {
 					<li>
 						<a
 							class="text-sky-800"
-							href={ templ.URL(fmt.Sprintf("/%d", recipe.ID)) }
+							href={ templ.URL(fmt.Sprintf("/recipe/%d", recipe.ID)) }
 						>
 							{ recipe.Name }
 						</a>

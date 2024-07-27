@@ -23,10 +23,15 @@ func main() {
 	// Routing
 	mux := http.NewServeMux()
 
+	// Static files
+	dir := http.Dir("./public")
+	fs := http.FileServer(dir)
+	mux.Handle("GET /public/", http.StripPrefix("/public/", fs))
+
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		var recipes []model.Recipe
 
-		err := data.DB.Select(&recipes, "SELECT id, url, name, course FROM recipe ORDER BY name")
+		err := data.DB.Select(&recipes, "SELECT id, url, name FROM recipe ORDER BY name")
 
 		if err != nil {
 			log.Println(err)
@@ -35,7 +40,7 @@ func main() {
 		views.Index(recipes).Render(r.Context(), w)
 	})
 
-	mux.HandleFunc("GET /{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /recipe/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var recipe model.Recipe
 		var ingredients []model.Ingredient
 
@@ -55,11 +60,6 @@ func main() {
 
 		views.Recipe(recipe, ingredients).Render(r.Context(), w)
 	})
-
-	// Static files
-	dir := http.Dir("./public")
-	fs := http.FileServer(dir)
-	mux.Handle("GET /public/", http.StripPrefix("/public/", fs))
 
 	port := os.Getenv("PORT")
 

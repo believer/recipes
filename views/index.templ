@@ -8,11 +8,11 @@ import (
 templ Index(recipes []model.Recipe) {
 	@Layout() {
 		<div class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0">
-			<ul>
+			<ul class="space-y-2">
 				for _, recipe := range recipes {
 					<li>
 						<a
-							class="text-sky-700 dark:text-sky-500"
+							class="text-sky-700 bg-neutral-50 py-2 px-4 rounded-lg block"
 							href={ templ.URL(fmt.Sprintf("/recipe/%d", recipe.ID)) }
 						>
 							{ recipe.Name }

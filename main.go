@@ -10,6 +10,23 @@ import (
 	"github.com/believer/recipes/views"
 )
 
+func Cache(h http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		var noCacheHeaders = map[string]string{
+			"Cache-Control": "max-age=3600",
+		}
+
+		// Set our NoCache headers
+		for k, v := range noCacheHeaders {
+			w.Header().Set(k, v)
+		}
+
+		h.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
+}
+
 func main() {
 	// DB
 	err := data.InitDB()
@@ -26,7 +43,7 @@ func main() {
 	// Static files
 	dir := http.Dir("./public")
 	fs := http.FileServer(dir)
-	mux.Handle("GET /public/", http.StripPrefix("/public/", fs))
+	mux.Handle("GET /public/", Cache(http.StripPrefix("/public/", fs)))
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		var recipes []model.Recipe

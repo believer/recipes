@@ -7,10 +7,14 @@ templ Layout() {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Recept</title>
 			<script src="/public/htmx.2.0.1.min.js"></script>
-			<link href="/public/output.a5ec32.css" rel="stylesheet"/>
+			<link href="/public/output.7c3bf5.css" rel="stylesheet"/>
 		</head>
 		<body class="bg-white" hx-boost="true">
-			{ children... }
+			<main class="py-5 grid grid-cols-[20px_1fr_20px] md:grid-cols-[20px_1fr_640px_1fr_20px]">
+				<div class="col-start-2 md:col-start-3">
+					{ children... }
+				</div>
+			</main>
 		</body>
 	</html>
 }

@@ -36,7 +36,7 @@ func MarkdownToHTML(input []byte) string {
 
 templ Recipe(recipe model.Recipe, ingredients []model.Ingredient) {
 	@Layout() {
-		<article class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0 space-y-8">
+		<article class="space-y-8">
 			<header class="flex flex-col gap-y-4">
 				<div>
 					<div class="text-xs uppercase font-medium text-neutral-500">

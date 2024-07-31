@@ -7,7 +7,7 @@ import (
 
 templ Index(recipes []model.Recipe, courses []model.Recipe, selectedCourse string) {
 	@Layout() {
-		<div class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0 space-y-4">
+		<div class="space-y-4">
 			<div class="flex gap-x-4 items-center">
 				for _, course := range courses {
 					<a class={ "block rounded-t-sm bg-neutral-100 px-4 py-2 border-b", course.Color() } href={ templ.URL(fmt.Sprintf("/?course=%s", course.Course)) }>

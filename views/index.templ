@@ -5,21 +5,31 @@ import (
 	"github.com/believer/recipes/model"
 )
 
-templ Index(recipes []model.Recipe) {
+templ Index(recipes []model.Recipe, courses []model.Recipe, selectedCourse string) {
 	@Layout() {
-		<div class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0">
-			<ul class="space-y-2">
+		<div class="mx-auto max-w-xl my-5 sm:my-8 px-5 sm:px-0 space-y-4">
+			<div class="flex gap-x-4 items-center">
+				for _, course := range courses {
+					<a class={ "block rounded-t-sm bg-neutral-100 px-4 py-2 border-b", course.Color() } href={ templ.URL(fmt.Sprintf("/?course=%s", course.Course)) }>
+						{ course.CourseType() }
+					</a>
+				}
+				if selectedCourse != "" {
+					<a class="text-sm" href="/">Rensa filter</a>
+				}
+			</div>
+			<ol class="space-y-2">
 				for _, recipe := range recipes {
 					<li>
 						<a
-							class="text-sky-700 bg-neutral-50 py-2 px-4 rounded-lg block"
+							class={ "text-sky-700 bg-neutral-100 py-2 px-4 block border-l-2", recipe.Color() }
 							href={ templ.URL(fmt.Sprintf("/recipe/%d", recipe.ID)) }
 						>
 							{ recipe.Name }
 						</a>
 					</li>
 				}
-			</ul>
+			</ol>
 		</div>
 	}
 }

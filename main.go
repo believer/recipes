@@ -47,14 +47,31 @@ func main() {
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		var recipes []model.Recipe
+		var courses []model.Recipe
+		selectedCourse := r.URL.Query().Get("course")
 
-		err := data.DB.Select(&recipes, "SELECT id, url, name FROM recipe ORDER BY name")
+		if selectedCourse == "" {
+			err := data.DB.Select(&recipes, "SELECT id, url, name, course FROM recipe ORDER BY name")
+
+			if err != nil {
+				log.Println(err)
+			}
+		} else {
+
+			err := data.DB.Select(&recipes, "SELECT id, url, name, course FROM recipe WHERE course = $1 ORDER BY name", selectedCourse)
+
+			if err != nil {
+				log.Println(err)
+			}
+		}
+
+		err = data.DB.Select(&courses, "SELECT course FROM recipe GROUP BY course;")
 
 		if err != nil {
 			log.Println(err)
 		}
 
-		views.Index(recipes).Render(r.Context(), w)
+		views.Index(recipes, courses, selectedCourse).Render(r.Context(), w)
 	})
 
 	mux.HandleFunc("GET /recipe/{id}", func(w http.ResponseWriter, r *http.Request) {

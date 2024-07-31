@@ -24,6 +24,17 @@ func (r Recipe) CourseType() string {
 	}
 }
 
+func (r Recipe) Color() string {
+	switch r.Course {
+	case "main":
+		return "border-yellow-300"
+	case "starter":
+		return "border-sky-300"
+	default:
+		return ""
+	}
+}
+
 func (r Recipe) DifficultyText() string {
 	switch r.Difficulty {
 	case "easy":

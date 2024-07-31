@@ -69,7 +69,7 @@ func main() {
 			log.Println(err)
 		}
 
-		err = data.DB.Get(&recipe, "SELECT id, url, name, course, description FROM recipe WHERE id = $1;", id)
+		err = data.DB.Get(&recipe, "SELECT id, url, name, course, description, difficulty, time, calories FROM recipe WHERE id = $1;", id)
 
 		if err != nil {
 			log.Println(err)

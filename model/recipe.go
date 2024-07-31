@@ -8,12 +8,30 @@ type Recipe struct {
 	Url         sql.NullString `db:"url"`
 	Name        string         `db:"name"`
 	Course      string         `db:"course"`
+	Time        int            `db:"time"`
+	Difficulty  string         `db:"difficulty"`
+	Calories    sql.NullString `db:"calories"`
 }
 
 func (r Recipe) CourseType() string {
 	switch r.Course {
 	case "main":
 		return "Huvudrätt"
+	case "starter":
+		return "Förrätt"
+	default:
+		return ""
+	}
+}
+
+func (r Recipe) DifficultyText() string {
+	switch r.Difficulty {
+	case "easy":
+		return "Lätt"
+	case "medium":
+		return "Mellan"
+	case "hard":
+		return "Svår"
 	default:
 		return ""
 	}
